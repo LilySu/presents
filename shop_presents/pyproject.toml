@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "shop_presents"
+version = "0.1.0"
+description = "shop_presents using crewAI"
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<=3.13"
+crewai = { extras = ["tools"], version = ">=0.55.2,<1.0.0" }
+agentops = "^0.3.10"
+
+
+[tool.poetry.scripts]
+shop_presents = "shop_presents.main:run"
+run_crew = "shop_presents.main:run"
+train = "shop_presents.main:train"
+replay = "shop_presents.main:replay"
+test = "shop_presents.main:test"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "presents"
+version = "0.1.0"
+description = ""
+authors = ["Lily <lilyxsu@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<=3.13"
+crewai = "^0.55.2"
+crewai-tools = "^0.12.0"
+agentops = "^0.3.10"
+python-dotenv = "^1.0.1"
+playwright = "^1.47.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
