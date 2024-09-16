@@ -7,7 +7,7 @@ import os
 load_dotenv()
 
 # Access the API key
-api_key = os.environ.get("AGENTOPS_API_KEY")
+api_key = os.environ.get("API_KEY")
 agentops.init()
 
 # This main file is intended to be a way for your to run your

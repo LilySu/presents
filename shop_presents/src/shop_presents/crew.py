@@ -1,8 +1,13 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-
+from langchain_community.chat_models.solar import SolarChat
+from dotenv import load_dotenv
+import os
 # Uncomment the following line to use an example of a custom tool
-# from shop_presents.tools.custom_tool import MyCustomTool
+from shop_presents.tools.custom_tool import AmazonTool
+
+load_dotenv()
+
 
 # Check our tools documentations for more information on how to use them
 # from crewai_tools import SerperDevTool
@@ -12,21 +17,33 @@ class ShopPresentsCrew():
 	"""ShopPresents crew"""
 	agents_config = 'config/agents.yaml'
 	tasks_config = 'config/tasks.yaml'
+	
 
 	@agent
 	def researcher(self) -> Agent:
 		return Agent(
 			config=self.agents_config['researcher'],
+			tools=[AmazonTool()],
 			# tools=[MyCustomTool()], # Example of custom tool, loaded on the beginning of file
-			verbose=True
+			verbose=True,
+			llm=SolarChat(
+				model="solar-pro",  # You may need to adjust this model name
+				solar_api_base=os.environ.get("SOLAR_API_BASE"),
+				solar_api_key=os.environ.get("SOLAR_API_KEY")
+			)
 		)
 
-	@agent
-	def reporting_analyst(self) -> Agent:
-		return Agent(
-			config=self.agents_config['reporting_analyst'],
-			verbose=True
-		)
+	# @agent
+	# def reporting_analyst(self) -> Agent:
+	# 	return Agent(
+	# 		config=self.agents_config['reporting_analyst'],
+	# 		verbose=True,
+	# 		llm=SolarChat(
+	# 			model="solar-pro",  # You may need to adjust this model name
+	# 			solar_api_base=os.environ.get("SOLAR_API_BASE"),
+	# 			solar_api_key=os.environ.get("SOLAR_API_KEY")
+	# 		)
+	# 	)
 
 	@task
 	def research_task(self) -> Task:
@@ -34,12 +51,12 @@ class ShopPresentsCrew():
 			config=self.tasks_config['research_task'],
 		)
 
-	@task
-	def reporting_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['reporting_task'],
-			output_file='report.md'
-		)
+	# @task
+	# def reporting_task(self) -> Task:
+	# 	return Task(
+	# 		config=self.tasks_config['reporting_task'],
+	# 		output_file='report.md'
+	# 	)
 
 	@crew
 	def crew(self) -> Crew:
